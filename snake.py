@@ -24,11 +24,9 @@ restart_button = Button(restart_button_img , 180 , HEIGHT//2 - 50 , 1.5 , screen
 # TEXT ON MENU SCREEN
 font = pygame.font.SysFont('Arial', 24)
 line1 = font.render('Controls: W - Up | A - Left | S - Down | D - Right', True, (255, 255, 255))
-line2 = font.render(' THANK U FROM MY HEART TO SIR DAVID MALAN AND THE WHOLE CS50 TEAM', True , (255,255,255))
 text_x1 = WIDHT // 2 - line1.get_width() // 2
 text_y1 = HEIGHT // 2 + 100
-text_x2 = WIDHT// 2 - line2.get_width()// 2
-text_y2 = HEIGHT // 2 + 150
+
 
 
 
@@ -53,7 +51,6 @@ while True:
                 pygame.quit()
                 sys.exit()
             screen.blit(line1 , (text_x1, text_y1)) 
-            screen.blit(line2 , (text_x2, text_y2)) 
         else:
             snake.snake_movement()
             game_over = (snake.snake_collision_boundry()  or  snake.snake_body_collision())

@@ -56,3 +56,8 @@ I created this project to practice Python and game development using Pygame.
 ## Assets
 
 The game uses images and audio files stored in the `Resources` and `music` directories.
+
+## Improvements for future
+- The movement is fps based, meaning it is affected by how fast or slow a pc is, it can be improved by implementing a time based movement system.
+- sprites for snake and balls.
+- better collision handling.
