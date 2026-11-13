@@ -1,3 +1,4 @@
+from pathlib import Path
 import pygame
 import random
 from pygame import mixer
@@ -10,12 +11,13 @@ ball_size = 10
 
 pygame.mixer.pre_init()
 mixer.init()
-eating_fx = pygame.mixer.Sound(r'D:\PROGRAMMING\PYTHON\crash_projects\snake_game\music\food.mp3')
-eating_fx.set_volume(1.3)
-pygame.mixer.music.load(r'D:\PROGRAMMING\PYTHON\crash_projects\snake_game\music\music.mp3')
+BASE_DIR = Path(__file__).resolve().parent
+eating_fx = pygame.mixer.Sound(BASE_DIR / 'music' / 'food.mp3')
+eating_fx.set_volume(1.0)
+pygame.mixer.music.load(BASE_DIR / 'music' / 'music.mp3')
 pygame.mixer.music.play(-1 , 0 , 5000)
 pygame.mixer.music.set_volume(0.3)
-game_over_fx = pygame.mixer.Sound(r'D:\PROGRAMMING\PYTHON\crash_projects\snake_game\music\gameover.mp3')
+game_over_fx = pygame.mixer.Sound(BASE_DIR / 'music' / 'gameover.mp3')
 
 
 
@@ -39,7 +41,7 @@ class Snake():
         self.direction = 'Right'
         self.ball = Ball(50 , 50 , screen)
         self.body_color = 'white'
-        self.head_movement = []
+        self.head_movement = [] # this list keeps track of the head movement of the snake so the body segments can follow the head movement
         self.screen = screen
         self.WIDHT = screen_widht
         self.HEIGHT = screen_height
@@ -71,22 +73,22 @@ class Snake():
                 self.snake.y += 20
         self.timer += 1 
         
-        if len(self.head_movement) > len(self.snake_segments):
-                self.head_movement.pop(0)
-        if len(self.snake_segments) > 0:
-            for head_movement , segment in zip(self.head_movement , self.snake_segments):
+        if len(self.head_movement) > len(self.snake_segments): # This is to make sure the head movement list is not longer than the snake segments list
+                self.head_movement.pop(0) # this pops the first element of the list so the head movement list is always the same length as the snake segments list. (the first element of the list is the oldest movement)
+        if len(self.snake_segments) > 0: 
+            for head_movement , segment in zip(self.head_movement , self.snake_segments): # this is to make the snake segments follow the head movement of the snake. (the first element of the list is the oldest movement)
                 segment.x = head_movement[0]
                 segment.y = head_movement[1]
                 pygame.draw.rect(self.screen , self.body_color , segment)
 
         
         pygame.draw.rect(self.screen, 'red', self.snake)
-        
-        
+                
         
     def make_sanke_body(self):
-        if len(self.snake_segments) > 0:
+        if len(self.snake_segments) > 0: # Means if there are already segments we add to the last segment of the snake.
             last_segment = self.snake_segments[-1]
+            # the x and y really doesn't matter because the snake segments will follow the head's movemment.
             snake_body_rect = pygame.Rect(last_segment.x , last_segment.y , 20, 20)
             self.snake_segments.append(snake_body_rect)
         else: 
@@ -95,6 +97,7 @@ class Snake():
         
         
     def snake_collision_eating(self):
+        # To create some uniqueness in the ball spawning we create a timer for the ball to spawn on the walls and corners of the screen.
         global ball_wall_timer
         global ball_corner_timer
         global ball_size

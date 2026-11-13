@@ -1,3 +1,4 @@
+from pathlib import Path
 import pygame
 import sys
 from  CLass import Snake , Button , game_over_fx
@@ -12,10 +13,10 @@ game_over = False
 should_music_play = True
 
 # LOADING AND INTIALINZING BUTTONS
-
-start_button_img = pygame.image.load(r'D:\PROGRAMMING\PYTHON\crash_projects\snake_game\Resources\start_btn.png')
-exit_button_img = pygame.image.load(r'D:\PROGRAMMING\PYTHON\crash_projects\snake_game\Resources\exit_btn.png')
-restart_button_img = pygame.image.load(r'D:\PROGRAMMING\PYTHON\crash_projects\snake_game\Resources\restart_btn.png')  
+BASE_DIR = Path(__file__).resolve().parent
+start_button_img = pygame.image.load(BASE_DIR / 'Resources' / 'start_btn.png')
+exit_button_img = pygame.image.load(BASE_DIR / 'Resources' / 'exit_btn.png')
+restart_button_img = pygame.image.load(BASE_DIR / 'Resources' / 'restart_btn.png')  
 start_button = Button(start_button_img , 200 , HEIGHT//2 - 50 , 0.5 , screen)
 exit_button = Button(exit_button_img , 410 , HEIGHT//2 - 50 , 0.5 , screen)
 restart_button = Button(restart_button_img , 180 , HEIGHT//2 - 50 , 1.5 , screen)
@@ -55,8 +56,7 @@ while True:
             screen.blit(line2 , (text_x2, text_y2)) 
         else:
             snake.snake_movement()
-            game_over = snake.snake_collision_boundry()   
-            game_over = snake.snake_body_collision()
+            game_over = (snake.snake_collision_boundry()  or  snake.snake_body_collision())
             snake.snake_collision_eating()
             if snake.ball:
                 snake.ball.draw()
