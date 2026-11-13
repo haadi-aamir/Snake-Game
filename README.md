@@ -27,7 +27,7 @@ I created this project to practice Python and game development using Pygame.
 1. Clone this repository:
 
    ```bash
-   git clone YOUR_REPOSITORY_URL
+   git clone https://github.com/haadi-aamir/Snake-Game.git
    ```
 
 2. Navigate to the project directory:
@@ -45,7 +45,7 @@ I created this project to practice Python and game development using Pygame.
 4. Run the game:
 
    ```bash
-   python main.py
+   python snake.py
    ```
 
 ## Requirements
